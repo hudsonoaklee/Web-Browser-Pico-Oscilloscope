@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pico Web Oscilloscope</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #121212; color: white; }
+        canvas { max-width: 800px; margin: 20px auto; background: #000; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Pico H Oscilloscope</h1>
+    <button id="connect">Connect to Pico</button>
+    <canvas id="scopeChart"></canvas>
+
+    <script>
+        let port;
+        let reader;
+        const ctx = document.getElementById('scopeChart').getContext('2d');
+        
+        // Initialize Chart.js
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Array(100).fill(''),
+                datasets: [{
+                    label: 'Voltage (V)',
+                    data: Array(100).fill(0),
+                    borderColor: '#00ff00',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    tension: 0.2
+                }]
+            },
+            options: {
+                scales: {
+                    y: { min: 0, max: 3.5, grid: { color: '#333' } },
+                    x: { display: false }
+                },
+                animation: false
+            }
+        });
+
+        document.getElementById('connect').addEventListener('click', async () => {
+            try {
+                // Request port from user
+                port = await navigator.serial.requestPort();
+                await port.open({ baudRate: 115200 });
+                
+                const textDecoder = new TextDecoderStream();
+                const readableStreamClosed = port.readable.pipeTo(textDecoder.writable);
+                reader = textDecoder.readable.getReader();
+
+                let buffer = "";
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) break;
+                    
+                    buffer += value;
+                    let lines = buffer.split("\n");
+                    buffer = lines.pop(); // Keep partial line in buffer
+
+                    for (let line of lines) {
+                        let num = parseFloat(line.trim());
+                        if (!isNaN(num)) {
+                            // Update Chart
+                            chart.data.datasets[0].data.push(num);
+                            chart.data.datasets[0].data.shift();
+                            chart.update();
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error("Serial error:", error);
+            }
+        });
+    </script>
+</body>
+</html>
