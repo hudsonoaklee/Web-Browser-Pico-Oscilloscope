@@ -11,7 +11,8 @@ and analysis.
 
 ## Demo
 
-![Oscilloscope Screenshot](images/demo.png)
+<img width="539" height="403" alt="Screenshot 2026-06-28 at 12 27 44 AM" src="https://github.com/user-attachments/assets/6448ff41-f4bb-485f-a152-5a37cebbc47b" />
+
 
 ## Features
 
@@ -70,7 +71,10 @@ to convert ADC readings back to actual voltages.
 
 ## Schematic
 
-![Schematic](images/schematic.png)
+<img width="2308" height="3264" alt="Schematics" src="https://github.com/user-attachments/assets/e9c20b28-e5c6-4485-9291-40fe4a69366c" />
+
+<img width="4032" height="3024" alt="IMG_0681" src="https://github.com/user-attachments/assets/be430096-3143-4dec-b404-6580c4a98573" />
+
 
 ## Firmware
 
