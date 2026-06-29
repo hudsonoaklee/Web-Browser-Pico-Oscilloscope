@@ -55,7 +55,7 @@ Computer GUI
 The voltage divider attenuates the input signal
 to keep it within the ADC operating range.
 
-A 2.37 V reference voltage is generated using
+A 2.4 V reference voltage is generated using
 a resistor divider and buffered by an op-amp.
 
 The reference voltage is combined with the
@@ -93,7 +93,7 @@ cd firmware
 
 ADC values are converted into voltages using:
 
-Vin = (Vadc - 1.70)/0.284
+Vin = (Vadc - 1.65)/0.284
 
 The resulting waveform is plotted in real time.
 
