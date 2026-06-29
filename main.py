@@ -5,7 +5,9 @@ import utime
 adc = machine.ADC(26)
 
 # Your measured hardware circuit baseline (V)
-offset = 1.62 
+offset = 1.65
+
+reverse_gain = 2.9
 
 # Correct Pico ADC coefficient (3.3V reference / 65535 max 16-bit value)
 coefficient = 3.3 / 65535
@@ -14,7 +16,7 @@ while True:
     raw = adc.read_u16()
     
     # Calculate the raw voltage input
-    voltage = raw * coefficient
+    voltage = (raw * coefficient - offset) * reverse_gain
     
     # Alternative choice: If you want the web graph to center around 0V, 
     # you can uncomment the line below to subtract your hardware offset:
