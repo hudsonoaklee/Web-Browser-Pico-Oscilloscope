@@ -85,15 +85,12 @@ The Pico firmware:
 3. Streams data over USB serial
 4. Sends data to the PC application
 
-git clone ...
-cd firmware
-...
 
 ## Signal Processing
 
 ADC values are converted into voltages using:
 
-Vin = (Vadc - 1.65)/0.284
+Vin = (Vadc - 1.65) * 2.9
 
 The resulting waveform is plotted in real time.
 
@@ -102,36 +99,15 @@ The resulting waveform is plotted in real time.
 1. Connect a known voltage source.
 2. Measure the ADC reading.
 3. Adjust software scaling constants.
-4. Verify readings at ±5 V.
+4. Verify readings at ±5 V with a standard oscilloscope
 
 ## Limitations
 
 - Not isolated from USB ground.
 - Maximum safe input approximately ±6 V.
 - LM358 bandwidth limits high-frequency performance.
-- ADC resolution limited to 12 bits.
+- ADC resolution limited to 12 bits (2.4 mV resolution). 
 
 ## Future Work
 
-- Switchable voltage ranges
-- Input over-voltage protection
-- Triggering system
-- FFT spectrum analyzer
-- External ADC
-- Differential inputs
-- Web-based interface
-
-## Lessons Learned
-
-This project required understanding:
-
-- Voltage dividers
-- Level shifting
-- ADC operation
-- Op-amp buffering
-- USB communication
-- Signal processing
-
-The most important lesson was learning why
-high-impedance measurement circuits require
-buffer amplifiers before ADC sampling.
+- ???
