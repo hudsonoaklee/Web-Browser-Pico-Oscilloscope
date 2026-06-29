@@ -5,14 +5,31 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { font-family: sans-serif; text-align: center; background: #121212; color: white; }
-        canvas { max-width: 800px; margin: 20px auto; background: #000; }
+        
+        /* New container to safely control the sizing without distortion */
+        .chart-container {
+            width: 90%;
+            max-width: 1000px; /* Slightly wider for better oscilloscope feel */
+            height: 500px;     /* Forces a taller, un-smushed display */
+            margin: 20px auto;
+            background: #000;
+        }
+        
+        canvas { 
+            width: 100% !important; 
+            height: 100% !important; 
+        }
+        
         button { padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px; }
     </style>
 </head>
 <body>
     <h1>Pico H Oscilloscope</h1>
     <button id="connect">Connect to Pico</button>
-    <canvas id="scopeChart"></canvas>
+    
+    <div class="chart-container">
+        <canvas id="scopeChart"></canvas>
+    </div>
 
     <script>
         let port;
@@ -34,8 +51,17 @@
                 }]
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false, // Allows the chart to fill our 500px tall container
                 scales: {
-                    y: { min: 0, max: 3.5, grid: { color: '#333' } },
+                    y: { 
+                        min: -5, 
+                        max: 5, 
+                        grid: { color: '#333' },
+                        ticks: {
+                            stepSize: 1 // Forces even 1V increments on the horizontal lines
+                        }
+                    },
                     x: { display: false }
                 },
                 animation: false
