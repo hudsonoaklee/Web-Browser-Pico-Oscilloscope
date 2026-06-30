@@ -111,3 +111,9 @@ The resulting waveform is plotted in real time.
 ## Future Work
 
 - ???
+
+## Sources
+
+Scoppy Oscilloscope project: https://github.com/fhdm-dev/scoppy 
+
+Scoppy Oscilloscope and Logic Analyzer: https://oscilloscope.fhdm.xyz/wiki/front-end-design-1.html
